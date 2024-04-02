@@ -6,20 +6,29 @@
     <title>URL Shortener</title>
 </head>
 <body>
-<h1>URL Shortener</h1>
+<h1>URL Encode/Decode</h1>
 <form id="shortenForm">
     <label for="longUrl">Long URL:</label><br>
     <input type="text" id="longUrl" name="longUrl" required><br><br>
-    <button type="submit">Shorten URL</button>
+    <button type="submit">Encode URL</button>
 </form>
+
 <div id="shortenedUrl"></div>
+
+<form id="decodeForm">
+    <label for="shortUrl">Short URL:</label><br>
+    <input type="text" id="shortUrl" name="shortUrl" required><br><br>
+    <button type="submit">Decode URL</button>
+</form>
+
+<div id="decodedUrl"></div>
 
 <script>
     document.getElementById("shortenForm").addEventListener("submit", function(event) {
         event.preventDefault();
         var longUrl = document.getElementById("longUrl").value;
 
-        fetch('/shorten', {
+        fetch('/encode', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
@@ -29,6 +38,26 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById("shortenedUrl").innerText = "Shortened URL: " + data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    document.getElementById("decodeForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var shortUrl = document.getElementById("shortUrl").value;
+
+        fetch('/decode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: shortUrl
+        })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("decodedUrl").innerText = "Decoded URL: " + data;
             })
             .catch(error => {
                 console.error('Error:', error);

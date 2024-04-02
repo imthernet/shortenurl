@@ -7,6 +7,14 @@ plugins {
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
+
+springBoot {
+	mainClass.set("com.example.UrlShortenerApplication")
+}
+
+
+
+
 java {
 	sourceCompatibility = '17'
 }
@@ -16,9 +24,12 @@ repositories {
 }
 
 dependencies {
+	implementation project(':common')
+	implementation project(':encoding')
+	implementation project(':decoding')
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.google.guava:guava:33.1.0-jre'
+	implementation 'commons-codec:commons-codec:1.15'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
