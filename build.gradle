@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'commons-codec:commons-codec:1.15'
+	implementation 'com.datastax.oss:java-driver-core:4.6.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

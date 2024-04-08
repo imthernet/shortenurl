@@ -1,0 +1,27 @@
+services:
+  read-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.read-service
+    ports:
+      - "8080:8080" # Przykładowy port, dostosuj do swoich potrzeb
+
+  write-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.write-service
+    ports:
+      - "8081:8080" # Przykładowy port, dostosuj do swoich potrzeb
+
+  cassandra-db:
+    image: cassandra:latest
+    container_name: cassandra-db
+    ports:
+      - "9042:9042"
+    environment:
+      - CASSANDRA_CLUSTER_NAME=myCluster
+    volumes:
+      - cassandra-data:/var/lib/cassandra
+
+volumes:
+  cassandra-data:
