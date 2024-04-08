@@ -1,0 +1,10 @@
+# Use the Eclipse Temurin images for JDK 17
+FROM eclipse-temurin:17
+
+WORKDIR /app
+
+# Kopiowanie plików projektu i budowanie aplikacji
+COPY build/libs/wojtula-0.0.1-SNAPSHOT.jar /app/service.jar
+
+# Uruchomienie serwisu do zapisywania
+CMD ["java", "-jar", "service.jar"]
