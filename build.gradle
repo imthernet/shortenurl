@@ -12,9 +12,6 @@ springBoot {
 	mainClass.set("com.example.UrlShortenerApplication")
 }
 
-
-
-
 java {
 	sourceCompatibility = '17'
 }
@@ -23,6 +20,10 @@ repositories {
 	mavenCentral()
 }
 
+/*tasks.withType(GroovyCompile).configureEach {
+	options.forkOptions.jvmArgs << '-Dspock.iKnowWhatImDoing.disableGroovyVersionCheck=true'    //it works! But be aware that "options" not "groovyOptions"!
+}*/
+
 dependencies {
 	implementation project(':common')
 	implementation project(':encoding')
@@ -30,7 +31,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'commons-codec:commons-codec:1.15'
-	implementation 'com.datastax.oss:java-driver-core:4.6.1'
+	implementation 'com.datastax.oss:java-driver-core:4.17.0'
+	implementation 'org.apache.groovy:groovy:4.0.21'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

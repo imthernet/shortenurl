@@ -1,18 +1,32 @@
 package com.example;
-import org.apache.commons.codec.binary.Base32;
+
+import com.datastax.oss.driver.api.core.CqlSession;
+import com.datastax.oss.driver.api.core.cql.ResultSet;
+import com.datastax.oss.driver.api.core.cql.Row;
+import com.datastax.oss.driver.api.core.cql.SimpleStatement;
 import org.springframework.stereotype.Component;
+import com.example.CassandraConnection;
 
 @Component
 public class UrlDecoder {
-    // Decode a Base32 encoded string
-    public String decodeFromBase32(String input) {
-        // Ensure non-null input
-        if (input == null) {
-            throw new IllegalArgumentException("Input cannot be null.");
-        }
+    private final CassandraConnection connection;
 
-        Base32 base32 = new Base32();
-        byte[] decodedBytes = base32.decode(input);
-        return new String(decodedBytes);
+    public UrlDecoder(CassandraConnection connection) {
+        this.connection = connection;
+    }
+
+    public String decodeFromBase32(String shortCode) {
+        try (CqlSession session = connection.getSession()) {
+            SimpleStatement statement = SimpleStatement.builder("SELECT long_url FROM my_keyspace.urls WHERE short_code = ?")
+                    .addPositionalValue(shortCode)
+                    .build();
+            ResultSet resultSet = session.execute(statement);
+            Row row = resultSet.one();
+            if (row != null) {
+                return row.getString("long_url");
+            } else {
+                return "URL not found";
+            }
+        }
     }
 }

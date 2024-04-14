@@ -28,6 +28,11 @@ dependencies {
     // Apache Commons Codec for Base32 encoding/decoding
     implementation("commons-codec:commons-codec:1.15")
 
+
+    implementation("com.datastax.oss:java-driver-core:4.17.0")
+
+    implementation(project(":common"))
+
     // Specify other dependencies
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

@@ -1,3 +1,5 @@
+version: '3.8'  # Always good to specify the version
+
 services:
   read-service:
     build:
@@ -21,7 +23,10 @@ services:
     environment:
       - CASSANDRA_CLUSTER_NAME=myCluster
     volumes:
-      - cassandra-data:/var/lib/cassandra
+      - ./init.cql:/docker-entrypoint-initdb.d/init.cql  # Mapping a local file to a container path
+      - cassandra-data:/var/lib/cassandra               # Using a named volume
 
-volumes:
+volumes:  # This should be at the same level as 'services'
   cassandra-data:
+    driver: local  # Optional: specifying the driver, default is 'local'
+

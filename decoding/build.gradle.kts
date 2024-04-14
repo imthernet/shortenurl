@@ -24,8 +24,13 @@ dependencies {
     // Spring Boot starter web for RESTful services
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    implementation(project(":common"))
+
     // Apache Commons Codec for Base32 encoding/decoding
     implementation("commons-codec:commons-codec:1.15")
+
+    // Cassandra connecting
+    implementation("com.datastax.oss:java-driver-core:4.6.1")
 
     // Specify other dependencies
     testImplementation("org.springframework.boot:spring-boot-starter-test")

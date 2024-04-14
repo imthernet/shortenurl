@@ -1,18 +1,29 @@
 package com.example;
-import org.apache.commons.codec.binary.Base32;
+import com.datastax.oss.driver.api.core.CqlSession;
 import org.springframework.stereotype.Component;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Component
 public class UrlEncoder {
-    // Encode a string to Base32
-    public String encodeToBase32(String input) {
-        // Ensure non-null input
-        if (input == null) {
-            throw new IllegalArgumentException("Input cannot be null.");
-        }
+    private final CassandraConnection connection;
 
-        Base32 base32 = new Base32();
-        byte[] encodedBytes = base32.encode(input.getBytes());
-        return new String(encodedBytes);
+    public UrlEncoder(CassandraConnection connection) {
+        this.connection = connection;
+    }
+
+    public String encodeToBase32(String longUrl) {
+        // Generate a short code and encode to Base32 (update the method as required)
+        String shortCode = generateShortCode(longUrl); // Generate your short URL code here
+        CqlSession session = connection.getSession();
+        session.execute("INSERT INTO my_keyspace.urls (short_code, long_url) VALUES (?, ?)",
+                shortCode, longUrl);
+        return "http://yourdomain.com/" + shortCode;
+    }
+
+    private String generateShortCode(String url) {
+        // Example: Create a simple hash and encode it (this is just a placeholder)
+        return Base64.getEncoder().encodeToString(url.getBytes(StandardCharsets.UTF_8)).substring(0, 8);
     }
 }

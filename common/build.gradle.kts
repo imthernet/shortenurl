@@ -10,7 +10,9 @@ repositories {
 }
 
 dependencies {
+    // implementation("org.codehaus.groovy:groovy:4.0.3")
     implementation("org.springframework.boot:spring-boot-starter:3.2.4")
+    implementation("com.datastax.oss:java-driver-core:4.13.0")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
